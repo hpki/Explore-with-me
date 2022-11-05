@@ -3,8 +3,8 @@ version: '3.1'
 services:
 
   ewm-service:
-    build: main/
-    container_name: main
+    build:   ewm-service/
+    container_name:   ewm-service
     image: 'explore-with-me-main'
     ports:
       - "8080:8080"
@@ -29,8 +29,8 @@ services:
       - POSTGRES_DB=ExploreWithMe
 
   stats-server:
-    build: stat/
-    container_name: stats
+    build:   stats-server/
+    container_name:   stats-server
     image: 'explore-with-me-stat'
     ports:
       - "9090:9090"
