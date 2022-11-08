@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
-@Builder
 public class EventShortDto {
     private Long id;
     private String title;
