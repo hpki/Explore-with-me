@@ -1,7 +1,6 @@
 package ru.practicum.explorewithme.event.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.explorewithme.category.model.Category;
