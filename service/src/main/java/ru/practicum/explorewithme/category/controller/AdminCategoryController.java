@@ -11,12 +11,13 @@ import ru.practicum.explorewithme.category.service.CategoryService;
 
 import javax.validation.Valid;
 
+import static ru.practicum.explorewithme.EwmMainService.ID_PATH_VARIABLE_KEY;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/admin/categories")
 public class AdminCategoryController {
-    public static final String ID_PATH_VARIABLE_KEY = "id";
     private final CategoryService categoryService;
 
     // Добавление категории

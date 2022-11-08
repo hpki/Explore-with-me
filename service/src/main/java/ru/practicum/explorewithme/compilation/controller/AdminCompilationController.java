@@ -14,13 +14,14 @@ import ru.practicum.explorewithme.event.service.EventService;
 import javax.validation.Valid;
 import java.util.List;
 
+import static ru.practicum.explorewithme.EwmMainService.EVENT_ID_PATH_VARIABLE_KEY;
+import static ru.practicum.explorewithme.EwmMainService.ID_PATH_VARIABLE_KEY;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/admin/compilations")
 public class AdminCompilationController {
-    public static final String ID_PATH_VARIABLE_KEY = "id";
-    public static final String EVENT_ID_PATH_VARIABLE_KEY = "eventId";
 
     private final CompilationService compilationsService;
     private final EventService eventService;

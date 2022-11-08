@@ -10,12 +10,13 @@ import ru.practicum.explorewithme.request.service.RequestService;
 
 import java.util.List;
 
+import static ru.practicum.explorewithme.EwmMainService.ID_PATH_VARIABLE_KEY;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/users/{id}/requests")
 public class RequestController {
-    public static final String ID_PATH_VARIABLE_KEY = "id";
 
     private final RequestService requestService;
     private final EventService eventService;

@@ -1,6 +1,7 @@
 package ru.practicum.explorewithme.compilation.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.explorewithme.event.model.Event;
@@ -13,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "compilations")
+@Builder
 public class Compilation {
 
     @Id

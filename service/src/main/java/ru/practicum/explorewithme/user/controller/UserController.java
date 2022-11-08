@@ -13,13 +13,14 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
+import static ru.practicum.explorewithme.EwmMainService.ID_PATH_VARIABLE_KEY;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @Validated
 @RequestMapping(path = "/admin/users")
 public class UserController {
-    public static final String ID_PATH_VARIABLE_KEY = "id";
 
     private final UserService userService;
 

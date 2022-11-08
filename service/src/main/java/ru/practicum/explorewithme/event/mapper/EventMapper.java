@@ -14,38 +14,37 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EventMapper {
 
-    public static Event toEvent(NewEventDto eventDto, Category category, User initiator) {
-        return new Event(
-                null,
-                eventDto.getTitle(),
-                eventDto.getAnnotation(),
-                eventDto.getDescription(),
-                category,
-                State.PENDING,
-                LocalDateTime.now(),
-                null,
-                eventDto.getEventDate(),
-                initiator,
-                eventDto.getLocation(),
-                eventDto.getParticipantLimit(),
-                eventDto.isPaid(),
-                eventDto.getRequestModeration()
-        );
-    }
+   public static Event toEvent(NewEventDto eventDto, Category category, User initiator) {
+       return Event.builder()
+               .title(eventDto.getTitle())
+               .annotation( eventDto.getAnnotation())
+               .description(eventDto.getDescription())
+               .category(category)
+               .state(State.PENDING)
+               .createdOn(LocalDateTime.now())
+               .eventDate(eventDto.getEventDate())
+               .initiator(initiator)
+               .location(eventDto.getLocation())
+               .participantLimit( eventDto.getParticipantLimit())
+               .paid(eventDto.isPaid())
+               .requestModeration(eventDto.getRequestModeration())
+               .build();
+   }
 
-    public static EventShortDto toEventShortDto(Event event, int confirmedRequests, int views) {
-        return new EventShortDto(
-                event.getId(),
-                event.getTitle(),
-                event.getAnnotation(),
-                event.getCategory(),
-                event.getEventDate(),
-                event.getInitiator(),
-                event.isPaid(),
-                confirmedRequests,
-                views
-        );
-    }
+
+   public static EventShortDto toEventShortDto(Event event, int confirmedRequests, int views) {
+       return EventShortDto.builder()
+               .id( event.getId())
+               .title(event.getTitle())
+               .annotation(event.getAnnotation())
+               .category(event.getCategory())
+               .eventDate(event.getEventDate())
+               .initiator(event.getInitiator())
+               .paid(event.isPaid())
+               .confirmedRequests(confirmedRequests)
+               .views(views)
+               .build();
+   }
 
     public static EventFullDto toEventFullDto(Event event, int confirmedRequests, int views) {
         return new EventFullDto(
@@ -67,4 +66,5 @@ public class EventMapper {
                 event.isRequestModeration()
         );
     }
+
 }

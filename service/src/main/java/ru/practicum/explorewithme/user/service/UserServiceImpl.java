@@ -18,14 +18,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-@Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
     @Override
-    @Transactional(readOnly = true)
     public List<UserDto> getAllUsers(List<Long> listId, int from, int size) {
         log.info("Getting all users list");
         Pageable pageable = PageRequest.of(from, size);
@@ -36,7 +34,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public User getUserById(Long id) {
         log.info("Getting user with id {}", id);
         return userRepository.findById(id).orElseThrow(
@@ -44,6 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDto addUser(NewUserDto newUserDto) {
         log.info("Adding user: {}", newUserDto);
         User user = UserMapper.toUser(newUserDto);
@@ -51,6 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteUser(Long id) {
         log.info("Deleting user with id {}", id);
         User user = getUserById(id);

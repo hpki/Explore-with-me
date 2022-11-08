@@ -18,14 +18,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-@Transactional
 @RequiredArgsConstructor
 public class CompilationServiceImpl implements CompilationService {
 
     private final CompilationRepository compilationRepository;
 
     @Override
-    @Transactional(readOnly = true)
     public List<CompilationDto> getAll(Boolean pinned, int from, int size) {
         log.info("Getting list of all compilation");
         Pageable pageable = PageRequest.of(from, size);
@@ -36,7 +34,6 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public CompilationDto getDtoCompilationById(Long id) {
         log.info("Getting dto compilation with id {}", id);
         Compilation compilation = compilationRepository.findById(id).orElseThrow(
@@ -45,7 +42,6 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Compilation getCompilationById(Long id) {
         log.info("Getting compilation with id {}", id);
         return compilationRepository.findById(id).orElseThrow(
@@ -53,6 +49,7 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
+    @Transactional
     public CompilationDto addCompilation(Compilation compilation) {
         log.info("Adding compilation: {}", compilation);
         Compilation newCompilation = compilationRepository.save(compilation);
@@ -60,6 +57,7 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
+    @Transactional
     public CompilationDto updateCompilation(Long compilationId, Long eventId, Event event) {
         log.info("Adding event with id {} to compilation with id {}", eventId, compilationId);
         Compilation compilation = getCompilationById(compilationId);
@@ -68,6 +66,7 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
+    @Transactional
     public void deleteCompilation(Long id) {
         log.info("Deleting compilation with id {}", id);
         Compilation compilation = getCompilationById(id);
@@ -76,6 +75,7 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
+    @Transactional
     public CompilationDto pinCompilation(Long id) {
         log.info("Pinning compilation with id {} on page", id);
         Compilation compilation = getCompilationById(id);
@@ -84,6 +84,7 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
+    @Transactional
     public CompilationDto unpin(Long id) {
         log.info("Unpinning compilation with id {} on page", id);
         Compilation compilation = getCompilationById(id);
@@ -92,6 +93,7 @@ public class CompilationServiceImpl implements CompilationService {
     }
 
     @Override
+    @Transactional
     public void deleteEvent(Long compilationId, Long eventId, Event event) {
         log.info("Deleting event with id {} from compilation with id {}", eventId, compilationId);
         Compilation compilation = getCompilationById(compilationId);

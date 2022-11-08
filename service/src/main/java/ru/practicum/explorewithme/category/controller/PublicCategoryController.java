@@ -11,12 +11,13 @@ import ru.practicum.explorewithme.category.service.CategoryService;
 
 import java.util.List;
 
+import static ru.practicum.explorewithme.EwmMainService.ID_PATH_VARIABLE_KEY;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/categories")
 public class PublicCategoryController {
-    public static final String ID_PATH_VARIABLE_KEY = "id";
     private final CategoryService categoryService;
 
     // Пролучение всех категорий

@@ -18,14 +18,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-@Transactional
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final EventRepository eventRepository;
 
     @Override
-    @Transactional(readOnly = true)
     public List<CategoryDto> getAll() {
         log.info("All category list is recived");
         List<Category> categories = categoryRepository.findAll();
@@ -35,7 +33,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public CategoryDto getCategoryDto(Long id) {
         log.info("Category dto with id {} is recived", id);
         Category category = categoryRepository.findById(id).orElseThrow(
@@ -44,7 +41,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Category getCategory(Long id) {
         log.info("Category with id {} is recived", id);
         return categoryRepository.findById(id).orElseThrow(
@@ -52,6 +48,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public CategoryDto addCategory(Category category) {
         log.info("Category {} added", category);
         Category newCategory = categoryRepository.save(category);
@@ -59,6 +56,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public CategoryDto updateCategory(CategoryDto categoryDto) {
         log.info("Category with id {} updated", categoryDto.getId());
         Category updatingCategory = getCategory(categoryDto.getId());
@@ -67,6 +65,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Transactional
     public void deleteCategory(Long id) {
         log.info("Category with id {} is deleted", id);
         Category category = getCategory(id);

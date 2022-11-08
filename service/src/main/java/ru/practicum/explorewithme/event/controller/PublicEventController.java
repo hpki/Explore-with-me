@@ -17,13 +17,14 @@ import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static ru.practicum.explorewithme.EwmMainService.ID_PATH_VARIABLE_KEY;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @Validated
 @RequestMapping(path = "/events")
 public class PublicEventController {
-    public static final String ID_PATH_VARIABLE_KEY = "id";
 
     private final EventService eventService;
 

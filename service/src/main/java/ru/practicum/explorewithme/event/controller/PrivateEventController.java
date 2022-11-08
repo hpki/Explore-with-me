@@ -15,14 +15,15 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
+import static ru.practicum.explorewithme.EwmMainService.EVENT_ID_PATH_VARIABLE_KEY;
+import static ru.practicum.explorewithme.EwmMainService.USER_ID_PATH_VARIABLE_KEY;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @Validated
 @RequestMapping(path = "/users/{id}/events")
 public class PrivateEventController {
-    public static final String USER_ID_PATH_VARIABLE_KEY = "id";
-    public static final String EVENT_ID_PATH_VARIABLE_KEY = "eventId";
 
     private final EventService eventService;
 

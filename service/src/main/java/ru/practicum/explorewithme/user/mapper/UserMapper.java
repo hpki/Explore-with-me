@@ -9,19 +9,18 @@ import ru.practicum.explorewithme.user.dto.UserDto;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMapper {
 
-    public static UserDto toUserDto(User user) {
-        return new UserDto(
-                user.getId(),
-                user.getName(),
-                user.getEmail()
-        );
-    }
+  public static UserDto toUserDto(User user) {
+      return UserDto.builder()
+              .id(user.getId())
+              .name( user.getName())
+              .email( user.getEmail())
+              .build();
+  }
 
     public static User toUser(NewUserDto newUserDto) {
-        return new User(
-                null,
-                newUserDto.getName(),
-                newUserDto.getEmail()
-        );
+        return User.builder()
+                .name(newUserDto.getName())
+                .email(newUserDto.getEmail())
+                .build();
     }
 }

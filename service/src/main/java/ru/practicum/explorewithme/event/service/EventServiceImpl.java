@@ -37,7 +37,6 @@ import static ru.practicum.explorewithme.event.model.QEvent.event;
 
 @Service
 @Slf4j
-@Transactional
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -50,7 +49,6 @@ public class EventServiceImpl implements EventService {
     private final RestClient restClient;
 
     @Override
-    @Transactional(readOnly = true)
     public EventFullDto getShortDtoById(Long id, HttpServletRequest request) {
         log.info("Getting event with id {}", id);
         restClient.postHit(
@@ -63,7 +61,6 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Event getEventById(Long id) {
         log.info("Getting event with id {}", id);
         return eventRepository.findById(id).orElseThrow(
@@ -71,7 +68,6 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<EventShortDto> getAll(FilterParams params, String sort, int from, int size, HttpServletRequest request) {
         log.info("Getting all events with filters: {}", params);
         restClient.postHit(
@@ -101,7 +97,6 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<EventShortDto> getEventsByUser(Long id, int from, int size) {
         log.info("Getting all events by user with id {}", id);
         List<Event> eventList = eventRepository.findEventsByInitiatorId(id, PageRequest.of(from, size));
@@ -111,6 +106,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public EventFullDto addEvent(NewEventDto newEventDto, Long id) {
         log.info("Adding event: {}", newEventDto);
         validationService.validateDeadline(newEventDto.getEventDate(), 2);
@@ -121,6 +117,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public EventFullDto updateUserEvent(Long userId, UpdateEventRequest updateEventRequest) {
         log.info("Updating event: {}", updateEventRequest);
         Event event = getEventById(updateEventRequest.getEventId());
@@ -129,7 +126,6 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public EventFullDto getUserEvent(Long userId, Long eventId) {
         log.info("Getting event with id: {}", eventId);
         Event event = getEventById(eventId);
@@ -138,6 +134,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public EventFullDto cancelEventByUser(Long userId, Long eventId) {
         log.info("Cancel event with id: {}", eventId);
         Event event = getEventById(eventId);
@@ -147,7 +144,6 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<RequestDto> getEventRequests(Long userId, Long eventId) {
         log.info("Getting request for event with id: {}", eventId);
         Event event = getEventById(eventId);
@@ -156,6 +152,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public RequestDto confirmRequest(Long userId, Long eventId, Long requestId) {
         log.info("Confirm request with id: {} for event with id: {}", requestId, eventId);
         Event event = getEventById(eventId);
@@ -164,6 +161,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public RequestDto rejectRequest(Long userId, Long eventId, Long requestId) {
         log.info("Reject request with id: {} for event with id: {}", requestId, eventId);
         Event event = getEventById(eventId);
@@ -172,7 +170,6 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<EventFullDto> getAllByFilter(List<Long> listUserId, List<State> states, List<Long> listCategoryId,
                                              LocalDateTime rangeStart, LocalDateTime rangeEnd, int from, int size) {
         log.info("Getting all events with filters: users {}, states {}, categories {}, start {}, end {},",
@@ -191,6 +188,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public EventFullDto updateByAdmin(Long eventId, UpdateEventRequest eventDto) {
         log.info("Uodating event: {}", eventDto);
         Event event = getEventById(eventId);
@@ -198,6 +196,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public EventFullDto publishByAdmin(Long eventId) {
         log.info("Publishing event with id: {}", eventId);
         Event event = getEventById(eventId);
@@ -209,6 +208,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional
     public EventFullDto reject(Long eventId) {
         log.info("Cancel event with id: {}", eventId);
         Event event = getEventById(eventId);
@@ -218,11 +218,11 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<Event> getEventsCompilation(NewCompilationDto newCompilationDto) {
         log.info("Getting compilation with id: {}", newCompilationDto.getEvents());
         return new ArrayList<>(eventRepository.findEventsByIdIn(newCompilationDto.getEvents()));
     }
+
 
     private EventFullDto updateEventFields(UpdateEventRequest updateEventRequest, Event event) {
         log.info("Updating fields in evet with id: {}", event.getId());

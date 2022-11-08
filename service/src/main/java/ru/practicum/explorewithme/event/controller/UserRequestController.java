@@ -9,14 +9,15 @@ import ru.practicum.explorewithme.request.dto.RequestDto;
 
 import java.util.List;
 
+import static ru.practicum.explorewithme.EwmMainService.*;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @Validated
 @RequestMapping(path = "/users/{id}/events/{eventId}/requests")
 public class UserRequestController {
-    public static final String USER_ID_PATH_VARIABLE_KEY = "id";
-    public static final String EVENT_ID_PATH_VARIABLE_KEY = "eventId";
+
     public static final String REQ_ID_PATH_VARIABLE_KEY = "reqId";
 
     private final EventService eventService;

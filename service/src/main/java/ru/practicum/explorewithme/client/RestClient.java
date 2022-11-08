@@ -1,6 +1,7 @@
 package ru.practicum.explorewithme.client;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -13,10 +14,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static ru.practicum.explorewithme.EwmMainService.formatter;
+
 @Slf4j
 @RestController
 public class RestClient {
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Value("${stats-post.path}")
     private String hitPostPath;
@@ -24,7 +26,7 @@ public class RestClient {
     @Value("${stats-get.path}")
     private String hitGetPath;
 
-    RestTemplate rest;
+    private RestTemplate rest;
 
     public RestClient(RestTemplate rest) {
         this.rest = rest;
