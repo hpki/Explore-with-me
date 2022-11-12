@@ -40,7 +40,7 @@ import static ru.practicum.explorewithme.event.model.QEvent.event;
 @Slf4j
 @RequiredArgsConstructor
 public class EventServiceImpl implements EventService {
-    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private final EventRepository eventRepository;
     private final RequestService requestService;

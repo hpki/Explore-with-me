@@ -19,9 +19,9 @@ import java.util.List;
 @RequestMapping(path = "/users/{id}/friends")
 public class SubscriptionController {
     public static final String ID_PATH_VARIABLE_KEY = "id";
-    public static final String FRIEND_ID_PATH_VARIABLE_KEY = "friendId";
+    private static final String FRIEND_ID_PATH_VARIABLE_KEY = "friendId";
 
-    public final SubscriptionService subscriptionService;
+    private final SubscriptionService subscriptionService;
 
     @GetMapping("/{friendId}/events")
     public List<EventShortDto> getFriendEvents(@PathVariable(ID_PATH_VARIABLE_KEY) Long userId,
