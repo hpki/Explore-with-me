@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.explorewithme.repository.StatsRepository;
 import ru.practicum.explorewithme.mapper.StatsMapper;
 import ru.practicum.explorewithme.model.Hit;
-import ru.practicum.explorewithme.dto.HitDto;
-import ru.practicum.explorewithme.dto.ViewStats;
+import ru.practicum.explorewithme.model.dto.HitDto;
+import ru.practicum.explorewithme.model.dto.ViewStats;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;

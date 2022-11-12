@@ -12,7 +12,7 @@ public interface UserService {
     List<UserDto> getAllUsers(List<Long> listId, int from, int size);
 
     // Получение пользователя по id
-    User getUserById(Long id);
+    User getById(Long id);
 
     // Добавление пользователя
     UserDto addUser(NewUserDto newUserDto);

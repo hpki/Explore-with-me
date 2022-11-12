@@ -1,5 +1,6 @@
 package ru.practicum.explorewithme.request.service;
 
+import org.springframework.data.domain.PageRequest;
 import ru.practicum.explorewithme.event.model.Event;
 import ru.practicum.explorewithme.request.model.Request;
 import ru.practicum.explorewithme.request.dto.RequestDto;
@@ -29,4 +30,6 @@ public interface RequestService {
 
     // Подтверждение запроса
     RequestDto confirmRequest(Event event, Long userId, Long requestId);
+
+    List<Event> getAllUserEventsWithConfirmedParticipation(Long id, PageRequest pageRequest);
 }

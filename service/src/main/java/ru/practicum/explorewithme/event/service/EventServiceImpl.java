@@ -35,6 +35,7 @@ import java.util.stream.Collectors;
 
 import static ru.practicum.explorewithme.event.model.QEvent.event;
 
+@Transactional
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -111,7 +112,7 @@ public class EventServiceImpl implements EventService {
         log.info("Adding event: {}", newEventDto);
         validationService.validateDeadline(newEventDto.getEventDate(), 2);
         Category category = categoryService.getCategory(newEventDto.getCategory());
-        User initiator = userService.getUserById(id);
+        User initiator = userService.getById(id);
         Event newEvent = EventMapper.toEvent(newEventDto, category, initiator);
         return toFullDto(eventRepository.save(newEvent));
     }
@@ -269,5 +270,28 @@ public class EventServiceImpl implements EventService {
                 LocalDateTime.now().minusMonths(1),
                 LocalDateTime.now().plusMonths(1));
         return EventMapper.toEventFullDto(event, confirmedRequestsCount, viewStats.getHits().intValue());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<EventShortDto> getEventsUserCreatedOrJoined(Long id, int from, int size) {
+        log.info("Получение всех событий, добавленных пользователем с id {}", id);
+        List<Event> eventsCreated = eventRepository.findEventsByInitiatorId(id, PageRequest.of(from, size));
+        log.info("Получение всех событий с одобренными заявками от пользователя с id {}", id);
+        List<Event> eventsJoined = requestService.getAllUserEventsWithConfirmedParticipation(id, PageRequest.of(from, size));
+        eventsCreated.addAll(eventsJoined);
+        return eventsCreated.stream()
+                .map(this::toShortDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<EventShortDto> getAllUserFriendsEvents(List<Long> friendIds, int from, int size) {
+        log.info("Получение событий, созданных друзьями или с их участием");
+        return friendIds.stream()
+                .map(id -> getEventsUserCreatedOrJoined(id, from, size))
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
     }
 }

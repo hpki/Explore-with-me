@@ -16,6 +16,7 @@ import ru.practicum.explorewithme.user.dto.UserDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Transactional
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -24,24 +25,26 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserDto> getAllUsers(List<Long> listId, int from, int size) {
         log.info("Getting all users list");
         Pageable pageable = PageRequest.of(from, size);
         List<User> userList = userRepository.findUsersByIdIn(listId, pageable);
+        log.info("Получен список пользователей {}", userList);
         return userList.stream()
                 .map(UserMapper::toUserDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public User getUserById(Long id) {
+    @Transactional(readOnly = true)
+    public User getById(Long id) {
         log.info("Getting user with id {}", id);
         return userRepository.findById(id).orElseThrow(
                 () -> new NotFoundException(String.format("user with id %s is not found", id)));
     }
 
     @Override
-    @Transactional
     public UserDto addUser(NewUserDto newUserDto) {
         log.info("Adding user: {}", newUserDto);
         User user = UserMapper.toUser(newUserDto);
@@ -49,10 +52,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public void deleteUser(Long id) {
         log.info("Deleting user with id {}", id);
-        User user = getUserById(id);
+        User user = getById(id);
         userRepository.delete(user);
         log.info("User with id {} deleted", id);
     }

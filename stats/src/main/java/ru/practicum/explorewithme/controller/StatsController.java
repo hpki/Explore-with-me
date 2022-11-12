@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.explorewithme.dto.HitDto;
-import ru.practicum.explorewithme.dto.ViewStats;
+import ru.practicum.explorewithme.model.dto.HitDto;
+import ru.practicum.explorewithme.model.dto.ViewStats;
 import ru.practicum.explorewithme.service.StatsService;
 
 import javax.validation.Valid;

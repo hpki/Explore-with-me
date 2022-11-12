@@ -2,6 +2,7 @@ package ru.practicum.explorewithme.request.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.explorewithme.utility.ValidationService;
@@ -41,7 +42,7 @@ public class RequestServiceImpl implements RequestService {
     @Override
     @Transactional
     public RequestDto addRequest(Long userId, Event event) {
-        User user = userService.getUserById(userId);
+        User user = userService.getById(userId);
         log.info("Adding request user with id {} for event with id {}", userId, event);
         Request request = requestRepository.getByRequesterIdAndEventId(userId, event.getId());
         validationService.validateNewRequest(event, userId, request, getRequestsByStatus(event.getId(), Status.CONFIRMED));
@@ -111,5 +112,14 @@ public class RequestServiceImpl implements RequestService {
         log.info("Getting request with id {}", id);
         return requestRepository.findById(id).orElseThrow(
                 () -> new NotFoundException(String.format("request with id %s is not found", id)));
+    }
+
+    @Override
+    public List<Event> getAllUserEventsWithConfirmedParticipation(Long id, PageRequest pageRequest) {
+        log.info("Search all events with participation requests from user with id {}", id);
+        List<Request> requests = requestRepository.findByRequesterIdAndStatus(id, Status.CONFIRMED, pageRequest);
+        return requests.stream()
+                .map(Request::getEvent)
+                .collect(Collectors.toList());
     }
 }

@@ -63,4 +63,8 @@ public interface EventService {
     // Получение списка событий
     List<Event> getEventsCompilation(NewCompilationDto newCompilationDto);
 
+    List<EventShortDto> getEventsUserCreatedOrJoined(Long id, int from, int size);
+
+    List<EventShortDto> getAllUserFriendsEvents(List<Long> friendIds, int from, int size);
+
 }
